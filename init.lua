@@ -2,7 +2,7 @@
 
 -- Wir registrieren einen eigenen Chatbefehl, um einen Pinguin zu erzeugen. --
 minetest.register_chatcommand("pengu", {
-    
+
     -- Um den Befehl ausführen zu können, muss der Spieler das Recht interact haben.
     privs = {
         interact = true,
@@ -18,25 +18,30 @@ minetest.register_chatcommand("pengu", {
         local player = minetest.get_player_by_name(name)
         -- Wir fragen die Position des Spielers ab und speichern sie in der Variablen pos.
         local pos = player:get_pos()
-        -- Wir berechnen die Position das Pinguins und speichern sie in der Variablen pengupos.
-        local pengupos = {x=pos.x+1, y=pos.y, z=pos.z}
+        
 
-        -- Wir verwenden eine Methode der Erweiterung mobs, mit der man ein Mob hinzufügen kann.
-        local penguin = mobs:add_mob(pengupos, {
-            -- Wir wählen einen Pinguin als Mob.
-            name = "mobs_animal:penguin",
-            -- Der Pinguin soll erstmal ein Junges sein.
-            child = true,
-            -- Besitzer des Tieres.
-            owner = "singleplayer",
-            -- Wir nennen den Pinguin Pingu.
-            nametag = "Pingu",
-            -- Es ist egal, wie viele Mobs es in der Karte gibt.
-            ignore_count = true
-        })
+        for i = 1, 10, 1 do
+            -- Wir berechnen die Position das Pinguins und speichern sie in der Variablen pengupos.
+            local pengupos = {x=pos.x+1, y=pos.y, z=pos.z+i}
 
-        -- Der Pinguin soll dem Player folgen, wenn er einen Apfel in der Hand hält.
-        penguin.follow = {"default:apple"}
+            -- Wir verwenden eine Methode der Erweiterung mobs, mit der man ein Mob hinzufügen kann.
+            local penguin = mobs:add_mob(pengupos, {
+                -- Wir wählen einen Pinguin als Mob.
+                name = "mobs_animal:penguin",
+                -- Der Pinguin soll erstmal ein Junges sein.
+                child = true,
+                -- Besitzer des Tieres.
+                owner = "singleplayer",
+                -- Wir nennen den Pinguin Pingu.
+                nametag = "Pingu" .. i,
+                -- Es ist egal, wie viele Mobs es in der Karte gibt.
+                ignore_count = true
+            })
+
+            -- Der Pinguin soll dem Player folgen, wenn er einen Apfel in der Hand hält.
+            penguin.follow = {"default:apple"}
+        end
+        
 
         -- Rückgabewert, der sagt, dass die Funktion für den Befehl erfolgreich ausgeführt wurde.
         -- Außerdem wird ein Text im Chat ausgegeben.
